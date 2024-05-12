@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+    <title>{% block title %}Tim's Site{% endblock %}</title>
+    <style>
+      .circle {
+          width: 23px;
+          height: 23px;
+          border-radius: 50%;
+          border: 2px solid white;
+          display: inline-block;
+      }
+      .circle.black{
+        border-color:black;
+      }   
+      .circle.green{
+        border-color:green;
+      }      
+      .circle.white{
+        border-color:white;
+      }      
+         
+      </style>
+  </head>
+
+  <body>
+    <div id="content" name="content">{% block content %} {% endblock %}</div>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+
+function updateCirclesDisplayClick(studentId, subject, Item) {
+    console.log("Updating circles display with Item:", studentId, subject, Item);
+
+    // Select the correct elements with data attributes
+    const cell = document.querySelector(`td[data-student-id="${studentId}"][data-sub="${subject}"]`);
+    if (!cell) {
+        console.error("Could not find cell for studentId:", studentId, "and subject:", subject);
+        return;
+    }
+
+    // Find spans for each circle by data-circle attribute
+    const c1 = cell.querySelector(`span[data-circle="1"]`);
+    const c2 = cell.querySelector(`span[data-circle="2"]`);
+    const c3 = cell.querySelector(`span[data-circle="3"]`);
+
+    // Clear previous classes to avoid conflicts
+    const clearClasses = (element) => {
+        if (element) {
+            element.classList.remove("black", "green", "white"); // Reset previous classes
+        }
+    };
+
+    // Apply the correct class based on the color provided
+    const setClass = (element, color) => {
+        if (element) {
+            clearClasses(element); // Reset previous classes
+            element.classList.add(color); // Add the new class
+        }
+    };
+
+    // Apply classes to circles based on the provided colors
+    if (Item && Item.item) {
+        setClass(c1, Item.item.c1_color);
+        setClass(c2, Item.item.c2_color);
+        setClass(c3, Item.item.c3_color);
+    }
+}
+
+
+function updateCirclesDisplayPress(studentId, subject, Item, circle) {
+    // Ensure there's a space between `td` and `span`
+    const c = document.querySelector(`td[data-student-id="${studentId}"][data-sub="${subject}"] span[data-circle="${circle}"]`);
+
+    if (c) {
+        // Clear any existing color classes before adding a new one
+        c.classList.remove('black', 'green', 'white');  // Add any other possible colors here
+        c.classList.add('green');  // Add the new color class
+    } else {
+        console.error("Element not found:", `td[data-student-id="${studentId}"][data-sub="${subject}"] span[data-circle="${circle}"]`);
+    }
+}
+
+
+  function handleCellClick(studentId, subject) {
+     
+       const url = `/update-click-count/${studentId}/${subject}/`;
+      fetch(url, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCSRFToken(),
+          },
+          body: JSON.stringify({ subject: subject }),
+      })
+      .then(response => {
+          if (response.ok) {
+              return response.json();  // Parse the JSON response
+          } else {
+              throw new Error('Failed to update click count');
+          }
+      })
+      .then(data => {
+          // Handle the updated click count
+          console.log("Updated count:", data.click_count);
+          console.log(data)
+          updateCirclesDisplayClick(studentId, subject, data
+          
+          );
+          // Optional: Trigger a visual update, like refreshing the page or updating the UI
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+  }
+  function handlelongClick(studentId, subject,circle) {
+     
+       const url = `/update-longpress/${studentId}/${subject}/${circle}/`;
+      fetch(url, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCSRFToken(),
+          },
+          body: JSON.stringify({ subject: subject,circle:circle }),
+      })
+      .then(response => {
+          if (response.ok) {
+              return response.json();  // Parse the JSON response
+          } else {
+              throw new Error('Failed to update long click');
+          }
+      })
+      .then(data => {
+          // Handle the updated long click
+          console.log(data)
+          updateCirclesDisplayPress(studentId, subject, data,circle);
+          // Optional: Trigger a visual update, like refreshing the page or updating the UI
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+  }
+  
+  function getCSRFToken() {
+      return document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+  const longPressDuration = 500; // Custom long press duration
+  let isLongPress = false;
+  const container = document.getElementById('data');
+  let hammer = new Hammer(container);
+
+  const initializeHammer = () => {
+    hammer.off('press');
+    hammer.off('tap');
+
+    hammer = new Hammer(container);
+    hammer.get('press').set({ time: longPressDuration });
+
+    hammer.on('press', (event) => {
+      const target = event.target;
+      if (target.classList.contains('circle')) {
+        isLongPress = true;
+        handlelongClick(target.dataset.studentId, target.dataset.sub, target.dataset.circle);
+      }
+    });
+
+    hammer.on('tap', (event) => {
+      const target = event.target;
+      if (!isLongPress) {
+        handleCellClick(target.dataset.studentId, target.dataset.sub);
+      }
+    });
+  };
+
+  initializeHammer(); // Initialize Hammer for the first time
+
+  const observer = new MutationObserver((mutations) => {
+    initializeHammer(); // Re-initialize when the DOM changes
+  });
+
+  observer.observe(container, {
+    childList: true,
+    subtree: true,
+  });
+
+  container.addEventListener('touchend', () => {
+    isLongPress = false;
+  });
+
+  container.addEventListener('mouseup', () => {
+    isLongPress = false;
+  });
+});
+
+  </script>
+  </body>
+</html>

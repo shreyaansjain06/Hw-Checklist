@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+{% block title %} Update Homework Checklist {% endblock %} 
+{% block content %}
+    <div class="form-group mx-5">
+        <h1 class="mt-4">Update Student</h1>
+        <br>
+        <form action="/do-update/{{student.id}}" method="post">
+            {% csrf_token %}
+        <label style="font-size: 20px;" class="mr-2">Name</label>
+        <input type="text" name="name" value="{{ student.name }}">
+        <br>
+        <input type="submit" value="Update" class="mt-2 btn btn-primary">
+        </form>
+    </div>
+   
+{% endblock %}

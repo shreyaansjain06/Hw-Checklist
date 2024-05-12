@@ -1,0 +1,313 @@
+{% extends 'base.html' %} 
+{% block title %} Homework Checklist {% endblock %} 
+{% block content %}
+    <div class="container">
+    <h1 class="text-center mt-4">Homework Checklist</h1>
+    <p>Date: {{ today }}</p>
+
+    <form id="data" method="post" action="#">
+        {% csrf_token %}
+        <table class="table table-bordered">
+        <thead>
+            <tr>
+            <th scope="col">Student Name</th>
+            <th scope="col">Gr</th>
+            <th scope="col">ELA</th>
+            <th scope="col">Math</th>
+            <th scope="col">Reading</th>
+            <th scope="col">Sci</th>
+            <th scope="col">S.S.</th>
+            <th scope="col">Computer</th>
+            <th scope="col">Test</th>
+            <th scope="col">Language</th>
+            <th scope="col">Other</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+            <td>{{ student.name }}</td>
+            <!-- Subject: Gr -->
+            <td data-student-id="{{ student.id }}" data-sub="Gr">
+                <div class="d-flex justify-content-between align-items-center">
+                <span
+                    class="circle {% if student.Gr.c1_color == 'green' %}green {% elif student.Gr.c1_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Gr"
+                    data-circle="1"
+                ></span>
+
+                <span
+                    class="circle {% if student.Gr.c2_color == 'green' %}green {% elif student.Gr.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Gr"
+                    data-circle="2"
+                ></span>
+
+                <span
+                    class="circle {% if student.Gr.c3_color == 'green' %}green {% elif student.Gr.c3_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Gr"
+                    data-circle="3"
+                ></span>
+                </div>
+            </td>
+
+            <!-- Subject: ELA -->
+            <td data-student-id="{{ student.id }}" data-sub="ELA">
+                <div class="d-flex justify-content-between align-items-center">
+                <span
+                    class="circle {% if student.ELA.c1_color == 'green' %}green {% elif student.ELA.c1_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="ELA"
+                    data-circle="1"
+                ></span>
+
+                <span
+                    class="circle {% if student.ELA.c2_color == 'green' %}green {% elif student.ELA.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="ELA"
+                    data-circle="2"
+                ></span>
+
+                <span
+                    class="circle {% if student.ELA.c3_color == 'green' %}green {% elif student.ELA.c3_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="ELA"
+                    data-circle="3"
+                ></span>
+                </div>
+            </td>
+
+            <!-- Subject: Math -->
+            <td data-student-id="{{ student.id }}" data-sub="Math">
+                <div class="d-flex justify-content-between align-items-center">
+                <span
+                    class="circle {% if student.Math.c1_color == 'green' %}green {% elif student.Math.c1_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Math"
+                    data-circle="1"
+                ></span>
+
+                <span
+                    class="circle {% if student.Math.c2_color == 'green' %}green {% elif student.Math.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Math"
+                    data-circle="2"
+                ></span>
+
+                <span
+                    class="circle {% if student.Math.c3_color == 'green' %}green {% elif student.Math.c3_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Math"
+                    data-circle="3"
+                ></span>
+                </div>
+            </td>
+
+            <!-- Subject: Reading -->
+            <td data-student-id="{{ student.id }}" data-sub="Reading">
+                <div class="d-flex justify-content-between align-items-center">
+                <span
+                    class="circle {% if student.Reading.c1_color == 'green' %}green {% elif student.Reading.c1_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Reading"
+                    data-circle="1"
+                ></span>
+
+                <span
+                    class="circle {% if student.Reading.c2_color == 'green' %}green {% elif student.Reading.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Reading"
+                    data-circle="2"
+                ></span>
+
+                <span
+                    class="circle {% if student.Reading.c3_color == 'green' %}green {% elif student.Reading.c3_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Reading"
+                    data-circle="3"
+                ></span>
+                </div>
+            </td>
+
+            <!-- Subject: Sci -->
+            <td data-student-id="{{ student.id }}" data-sub="Sci">
+                <div class="d-flex justify-content-between align-items-center">
+                <span
+                    class="circle {% if student.Sci.c1_color == 'green' %}green {% elif student.Sci.c1_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Sci"
+                    data-circle="1"
+                ></span>
+
+                <span
+                    class="circle {% if student.Sci.c2_color == 'green' %}green {% elif student.Sci.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Sci"
+                    data-circle="2"
+                ></span>
+
+                <span
+                    class="circle {% if student.Sci.c3_color == 'green' %}green {% elif student.Sci.c3_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Sci"
+                    data-circle="3"
+                ></span>
+                </div>
+            </td>
+
+            <!-- Subject: S_S -->
+            <td data-student-id="{{ student.id }}" data-sub="S_S">
+                <div class="d-flex justify-content-between align-items-center">
+                <span
+                    class="circle {% if student.S_S.c1_color == 'green' %}green {% elif student.S_S.c1_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="S_S"
+                    data-circle="1"
+                ></span>
+
+                <span
+                    class="circle {% if student.S_S.c2_color == 'green' %}green {% elif student.S_S.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="S_S"
+                    data-circle="2"
+                ></span>
+
+                <span
+                    class="circle {% if student.S_S.c3_color == 'green' %}green {% elif student.S_S.c3_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="S_S"
+                    data-circle="3"
+                ></span>
+                </div>
+            </td>
+
+            <!-- Subject: Computer -->
+            <td data-student-id="{{ student.id }}" data-sub="Computer">
+                <div class="d-flex justify-content-between align-items-center">
+                <span
+                    class="circle {% if student.Computer.c1_color == 'green' %}green {% elif student.Computer.c1_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Computer"
+                    data-circle="1"
+                ></span>
+
+                <span
+                    class="circle {% if student.Computer.c2_color == 'green' %}green {% elif student.Computer.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Computer"
+                    data-circle="2"
+                ></span>
+
+                <span
+                    class="circle {% if student.Computer.c3_color == 'green' %}green {% elif student.Computer.c3_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Computer"
+                    data-circle="3"
+                ></span>
+                </div>
+            </td>
+
+            <!-- Subject: Test -->
+            <td data-student-id="{{ student.id }}" data-sub="Test">
+                <div class="d-flex justify-content-between align-items-center">
+                <span
+                    class="circle {% if student.Test.c1_color == 'green' %}green {% elif student.Test.c1_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Test"
+                    data-circle="1"
+                ></span>
+
+                <span
+                    class="circle {% if student.Test.c2_color == 'green' %}green {% elif student.Test.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Test"
+                    data-circle="2"
+                ></span>
+
+                <span
+                    class="circle {% if student.Test.c3_color == 'green' %}green {% elif student.Test.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Test"
+                    data-circle="3"
+                ></span>
+                </div>
+            </td>
+
+            <!-- Subject: Language -->
+            <td data-student-id="{{ student.id }}" data-sub="Language">
+                <div class="d-flex justify-content-between align-items-center">
+                <span
+                    class="circle {% if student.Language.c1_color == 'green' %}green {% elif student.Language.c1_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Language"
+                    data-circle="1"
+                ></span>
+
+                <span
+                    class="circle {% if student.Language.c2_color == 'green' %}green {% elif student.Language.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Language"
+                    data-circle="2"
+                ></span>
+
+                <span
+                    class="circle {% if student.Language.c1_color == 'green' %}green {% elif student.Language.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Language"
+                    data-circle="3"
+                ></span>
+                </div>
+            </td>
+
+            <!-- Subject: Other -->
+            <td data-student-id="{{ student.id }}" data-sub="Other">
+                <div class="d-flex justify-content-between align-items-center">
+                <span
+                    class="circle {% if student.Other.c1_color == 'green' %}green {% elif student.Other.c1_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Other"
+                    data-circle="1"
+                ></span>
+
+                <span
+                    class="circle {% if student.Other.c2_color == 'green' %}green {% elif student.Other.c2_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Other"
+                    data-circle="2"
+                ></span>
+
+                <span
+                    class="circle {% if student.Other.c3_color == 'green' %}green {% elif student.Other.c3_color == 'black' %}black {% else %}white{% endif %}"
+                    data-student-id="{{ student.id }}"
+                    data-sub="Other"
+                    data-circle="3"
+                ></span>
+                </div>
+            </td>
+            <td>
+                <div class="d-flex justify-content-between align-items-center">
+                <a href="update/{{student.id}}" class="btn btn-warning btn-sm"
+                    >Edit</a
+                >
+                <a href="/delete/{{student.id}}" class="btn btn-danger btn-sm"
+                    >Delete</a
+                >
+                </div>
+            </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+
+        <div>
+        <input type="text" , name="new" />
+        <button class="btn btn-primary" type="submit" name="newStudent" value="newStudent">
+            Add Student
+        </button>
+        </div>
+    </form>
+    </div>
+{% endblock %}
